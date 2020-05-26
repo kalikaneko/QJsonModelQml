@@ -233,21 +233,31 @@ QVariant QJsonModel::data(const QModelIndex &index, int role) const
     QJsonTreeItem *item = static_cast<QJsonTreeItem*>(index.internalPointer());
 
 
-    if (role == Qt::DisplayRole) {
+    switch (role) {
+        case Roles::KeyRole:
+            return item->key();
+        case Roles::ValueRole:
+            return item->value();
+        case Qt::DisplayRole:
+            {
+                if (index.column() == 0)
+                    return QString("%1").arg(item->key());
+                else if (index.column() == 1)
+                    return QString("%1").arg(item->value());
+                else
+                    return QString("");
 
-        if (index.column() == 0)
-            return QString("%1").arg(item->key());
-
-        if (index.column() == 1)
-            return QString("%1").arg(item->value());
-    } else if (Qt::EditRole == role) {
-        if (index.column() == 1) {
-            return QString("%1").arg(item->value());
-        }
+            }
+        case Qt::EditRole:
+            {
+                if (index.column() == 1)
+                    return QString("%1").arg(item->value());
+                else
+                    return QString("");
+            }
+        default:
+            return QVariant();
     }
-
-
-
     return QVariant();
 
 }
@@ -390,4 +400,12 @@ QJsonValue  QJsonModel::genJson(QJsonTreeItem * item) const
         return va;
     }
 
+}
+
+QHash<int, QByteArray> QJsonModel::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles[Roles::KeyRole] = "key";
+    roles[Roles::ValueRole] = "value";
+    return roles;
 }

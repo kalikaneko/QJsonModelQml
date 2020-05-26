@@ -26,11 +26,12 @@
 #define QJSONMODEL_H
 
 #include <QAbstractItemModel>
+#include <QHash>
+#include <QIcon>
 #include <QJsonDocument>
 #include <QJsonValue>
 #include <QJsonArray>
 #include <QJsonObject>
-#include <QIcon>
 
 class QJsonModel;
 class QJsonItem;
@@ -52,7 +53,6 @@ public:
     QString value() const;
     QJsonValue::Type type() const;
 
-
     static QJsonTreeItem* load(const QJsonValue& value, QJsonTreeItem * parent = 0);
 
 protected:
@@ -73,6 +73,11 @@ private:
 class QJsonModel : public QAbstractItemModel
 {
     Q_OBJECT
+    enum Roles {
+        KeyRole = Qt::UserRole + 1,
+        ValueRole
+    };
+
 public:
     explicit QJsonModel(QObject *parent = nullptr);
     QJsonModel(const QString& fileName, QObject *parent = nullptr);
@@ -91,6 +96,8 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
     QJsonDocument json() const;
+    QHash<int, QByteArray> roleNames() const override;
+
 
 private:
     QJsonValue genJson(QJsonTreeItem *) const;

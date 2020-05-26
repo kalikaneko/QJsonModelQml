@@ -4,12 +4,11 @@
 #
 #-------------------------------------------------
 
-QT       += core gui widgets
-CONFIG   += c++11
+CONFIG   += qt
+QT       += qml quick
 lessThan(QT_MAJOR_VERSION, 5): error("requires Qt 5")
 
 TARGET = QJsonModel
-TEMPLATE = app
 
 SOURCES += \
     main.cpp \
@@ -17,6 +16,11 @@ SOURCES += \
 
 HEADERS += \
     qjsonmodel.h
+
+RESOURCES += main.qrc
+
+
+
 
 
 

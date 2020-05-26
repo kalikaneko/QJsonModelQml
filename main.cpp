@@ -17,21 +17,17 @@
 
 **********************************************/
 
-#include <QApplication>
-#include <QTreeView>
-#include <QFile>
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QtQml>
 #include <string>
+
 #include "qjsonmodel.h"
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
+int main(int argc, char* argv[]) {
+    QGuiApplication a(argc, argv);
 
-    QTreeView * view   = new QTreeView;
-    QJsonModel * model = new QJsonModel;
-
-    view->setModel(model);
-
+    QJsonModel* model = new QJsonModel;
     std::string json = R"({
                        "firstName": "John",
                        "lastName": "Smith",
@@ -55,11 +51,12 @@ int main(int argc, char *argv[])
                            }
                        ]
                    })";
-
-
-
     model->loadJson(QByteArray::fromStdString(json));
-    view->show();
+
+    QQmlApplicationEngine engine;
+    QQmlContext* ctx = engine.rootContext();
+    ctx->setContextProperty("jsonModel", model);
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return a.exec();
 }
