@@ -6,22 +6,12 @@ Window {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello world")
+    title: qsTr("Hello QML World! This is JSON")
 
     TreeView {
         id: treeView
         model: jsonModel
         anchors.fill: parent
-
-        itemDelegate: Rectangle {
-
-	    color: ( styleData.row % 2 == 0 ) ? "white" : "lightblue"
-
-	    Text {
-		anchors.verticalCenter: parent.verticalCenter
-		text: styleData.value
-	    }
-	}
 
         TableViewColumn {
             id: keyCol

@@ -3,6 +3,7 @@ import QtQuick 2.0
 
 Rectangle {
     id: root
+    color: ( styleData.row % 2 == 0 ) ? "white" : "lightblue"
     property string text
     property bool mode: false
     Component{
