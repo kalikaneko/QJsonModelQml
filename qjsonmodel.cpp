@@ -264,6 +264,8 @@ QVariant QJsonModel::data(const QModelIndex &index, int role) const
 
 bool QJsonModel::setData(const QModelIndex &index, const QVariant &value, int role)
 {
+    qDebug() << "called setData" << value << "and role:" << role;
+
     int col = index.column();
     if (Qt::EditRole == role) {
         if (col == 1) {

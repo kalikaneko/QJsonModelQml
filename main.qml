@@ -19,7 +19,13 @@ Window {
             role: "key"
             delegate: EditorDelegate {
                 text: styleData.value
-                onTextChanged: model.key = text
+                onTextChanged: {
+                    /* 
+                       this calls setData in the model,
+                       which in turn emits dataChanged signal
+                    */
+                    model.key = text
+                }
             }
         }
 
@@ -31,9 +37,14 @@ Window {
             width: treeView.viewport.width - keyCol.width
             delegate: EditorDelegate {
                 text: styleData.value
-                onTextChanged: model.value = text
+                onTextChanged: {
+                    /* 
+                       this calls setData in the model,
+                       which in turn emits dataChanged signal
+                    */
+                    model.value = text
+                }
             }
         }
-
     }  
 }

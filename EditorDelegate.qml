@@ -6,14 +6,17 @@ Rectangle {
     color: ( styleData.row % 2 == 0 ) ? "white" : "lightblue"
     property string text
     property bool mode: false
+
     Component{
         id: component_display
         Text{}
     }
+
     Component{
         id: component_edit
         TextInput{}
     }
+
     Loader{
         id: loader
         anchors.fill: parent
@@ -29,6 +32,7 @@ Rectangle {
             text = loader.item.text
             mode = false
         }
+
         MouseArea{
             anchors.fill: parent
             onDoubleClicked: {

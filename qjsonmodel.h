@@ -96,8 +96,7 @@ public:
     int columnCount(const QModelIndex &parent = QModelIndex()) const Q_DECL_OVERRIDE;
     Qt::ItemFlags flags(const QModelIndex &index) const Q_DECL_OVERRIDE;
     QJsonDocument json() const;
-    QHash<int, QByteArray> roleNames() const override;
-
+    QHash<int, QByteArray> roleNames() const Q_DECL_OVERRIDE;
 
 private:
     QJsonValue genJson(QJsonTreeItem *) const;
