@@ -2,8 +2,6 @@ import QtQuick 2.2
 import QtQuick.Window 2.2
 import QtQuick.Controls 1.4
 
-//import foo 1.0
-
 Window {
     visible: true
     width: 640
@@ -16,27 +14,35 @@ Window {
         anchors.fill: parent
 
         itemDelegate: Rectangle {
-                   color: ( styleData.row % 2 == 0 ) ? "white" : "lightblue"
-                   //height: 20
 
-                   Text {
-                       anchors.verticalCenter: parent.verticalCenter
-                       text: styleData.value === undefined ? "" : styleData.value
-                   }
-               }
+	    color: ( styleData.row % 2 == 0 ) ? "white" : "lightblue"
 
+	    Text {
+		anchors.verticalCenter: parent.verticalCenter
+		text: styleData.value
+	    }
+	}
 
         TableViewColumn {
             id: keyCol
             title: "key"
             role: "key"
+            delegate: EditorDelegate {
+                text: styleData.value
+                onTextChanged: model.key = text
+            }
         }
+
         TableViewColumn {
             id: valueCol
             title: "value"
             role: "value"
             movable: false
             width: treeView.viewport.width - keyCol.width
+            delegate: EditorDelegate {
+                text: styleData.value
+                onTextChanged: model.value = text
+            }
         }
 
     }  
